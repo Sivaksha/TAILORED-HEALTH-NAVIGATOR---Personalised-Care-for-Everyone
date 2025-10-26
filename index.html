@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Upload</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Upload Documents</h1>
+    <!-- Allow multiple file uploads -->
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <label for="file-upload">Choose files to upload:</label>
+        <input 
+            type="file" 
+            id="file-upload" 
+            name="file" 
+            multiple 
+            required 
+            title="Upload files" 
+            aria-label="File upload">
+        <button type="submit" title="Submit the uploaded files">Upload</button>
+    </form>
+
+    <h2>Uploaded Documents</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Filename</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for doc in documents %}
+            <tr>
+                <td>{{ doc[0] }}</td>
+                <td>{{ doc[1] }}</td>
+                <td>
+                    <!-- View link for each document -->
+                    <a href="/view/{{ doc[1] }}" target="_blank" title="View the document">View</a>
+
+                    <!-- Delete form for each document -->
+                    <form action="/delete/{{ doc[0] }}" method="POST" class="inline-form">
+                        <button type="submit" title="Delete this document">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
